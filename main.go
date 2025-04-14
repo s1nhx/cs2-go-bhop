@@ -67,7 +67,7 @@ func main() {
 	}
 
 	off_CSPlayerPawn := client + 0x1874050 // dwLocalPlayerPawn (see https://github.com/a2x/cs2-dumper/blob/main/output/offsets.hpp#L20)
-	force_jump_off := client + 0x186CD60   // dwForceJump
+	force_jump_off := client + 0x186CD60   // dwForceJump (see https://github.com/a2x/cs2-dumper/blob/main/output/buttons.hpp#L16)
 
 	fmt.Printf("Ready to hop!\n")
 
@@ -75,7 +75,8 @@ func main() {
 		C_CSPlayerPawn, err := read(hProcess, uintptr(off_CSPlayerPawn), 8)
 		if err != nil {
 			fmt.Printf("Couldn't read C_CSPlayerPawn (0x%X): %s\n", uintptr(off_CSPlayerPawn), err)
-            break
+			fmt.Printf("Check if you're loaded to any map and run again.\n")
+			break
 		}
 
 		localplayer := binary.LittleEndian.Uint64(C_CSPlayerPawn)
@@ -83,7 +84,8 @@ func main() {
 		is_in_air_flag, err := read(hProcess, uintptr(localplayer+0x450), 4)
 		if err != nil {
 			fmt.Printf("Couldn't read is_in_air_flag (0x%X): %s\n", uintptr(localplayer+0x450), err)
-            break
+			fmt.Printf("Check if you're loaded to any map and run again.\n")
+			break
 		}
 
 		// Two possible values:
