@@ -75,6 +75,7 @@ func main() {
 		C_CSPlayerPawn, err := read(hProcess, uintptr(off_CSPlayerPawn), 8)
 		if err != nil {
 			fmt.Printf("Couldn't read C_CSPlayerPawn (0x%X): %s\n", uintptr(off_CSPlayerPawn), err)
+   break
 		}
 
 		localplayer := binary.LittleEndian.Uint64(C_CSPlayerPawn)
@@ -82,6 +83,7 @@ func main() {
 		is_in_air_flag, err := read(hProcess, uintptr(localplayer+0x450), 4)
 		if err != nil {
 			fmt.Printf("Couldn't read is_in_air_flag (0x%X): %s\n", uintptr(localplayer+0x450), err)
+   break
 		}
 
 		// Two possible values:
